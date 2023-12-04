@@ -1,0 +1,32 @@
+name: TouchScreen Workflow
+
+on:
+  push:
+    paths:
+      - 'touchscreen/**'
+  pull_request:
+    paths:
+      - 'touchscreen/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+
+    - name: Install Dependencies
+      working-directory: touchscreen
+      run: |
+        npm install
+
+    - name: Run Tests
+      working-directory: touchscreen
+      run: |
+        npm test
