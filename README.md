@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+# Touch Screen Simulation Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This React application simulates a touch screen interface for interacting with parcel lockers. The application includes three main components: `HYM`, `ParcelLockerInterface`, and `ParcelLockerSelection`. Additionally, there are two sub-components: `NumericKeypad` and `PickupOrDeliverySelection`.
 
-## Available Scripts
+## 1. HYM Component
 
-In the project directory, you can run:
+The `HYM` component serves as the main entry point for the touch screen simulation. It orchestrates the flow of the application, allowing users to select a parcel locker, choose between pickup or delivery, and perform various actions.
 
-### `npm start`
+### State Management
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- `selectedLocker`: Stores the number of the selected parcel locker.
+- `selectedAction`: Stores the user's choice between pickup and delivery.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Functions
 
-### `npm test`
+1. `handleLockerSelect(lockerNumber)`: Updates the state with the selected parcel locker number.
+2. `handleSelection(choice)`: Updates the state with the user's choice between pickup and delivery.
+3. `handleGoBack()`: Resets the state, allowing the user to go back to the initial state.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Styles
 
-### `npm run build`
+- `containerStyle`: Defines styling for the main container.
+- `headerStyle`: Defines styling for the header.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 2. ParcelLockerInterface Component
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The `ParcelLockerInterface` component represents the interface for the selected locker and action. It provides input for code entry, numeric keypad, action buttons, and controls for closing the locker door.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### State Management
 
-### `npm run eject`
+- `code`: Holds the input code provided by the user.
+- `message`: Displays messages based on user actions or server responses.
+- `showCloseDoorButton`: Determines whether to display the "Close the Door" button.
+- `pickupButtonClicked`: Indicates if the pickup or delivery button has been clicked.
+- `pickupPressed` and `homePressed`: Track the pressed state of the Pickup and HomePage buttons.
+- `lockerCabinet`: Stores the locker cabinet number for subsequent operations.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Functions
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. `handleCodeChange(event)`: Updates the state with the entered code.
+2. `handleDigitClick(digit)`: Appends the clicked digit to the code.
+3. `handleDeleteClick()`: Removes the last digit from the code.
+4. `handleAction()`: Initiates the pickup or delivery action based on user input and updates the state accordingly.
+5. `handleCloseDoor()`: Closes the locker door, triggers an HTTP request, and updates the state.
+6. `handleGoBack()`: Navigates back to the previous interface.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Styles
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- `inputStyle`: Defines styling for the code input field.
+- `buttonStyle`: Defines styling for action buttons.
+- `closeButtonStyle`: Defines styling for the "Close the Door" button.
 
-## Learn More
+## 3. ParcelLockerSelection Component
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The `ParcelLockerSelection` component allows users to select a locker from the available options. It fetches the locker numbers from the backend and presents them as clickable buttons for selection.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### State Management
 
-### Code Splitting
+- `lockerNumbers`: Stores the array of available locker numbers.
+- `pressedButton`: Keeps track of the currently pressed button for a smoother user experience.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Functions
 
-### Analyzing the Bundle Size
+1. `handleLockerSelect(lockerNumber)`: Calls the `onSelectLocker` callback with the selected locker number when a button is clicked.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Styles
 
-### Making a Progressive Web App
+- `buttonStyle`: Defines styling for the locker selection buttons. It includes margin, padding, font size, color, border, border radius, cursor, and transition for a smooth background color change.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 4. NumericKeypad Component
 
-### Advanced Configuration
+The `NumericKeypad` component represents a numeric keypad for code entry. It includes digit buttons and a delete button for code manipulation.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### State Management
 
-### Deployment
+- `pressedButton`: Keeps track of the currently pressed button for a smoother user experience.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Functions
 
-### `npm run build` fails to minify
+1. `handleButtonDown(digit)`: Sets the pressed state when a digit button is pressed.
+2. `handleButtonUp()`: Resets the pressed state when a button is released.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Styles
+
+- `keypadStyle`: Defines styling for the numeric keypad.
+- `buttonStyle`: Defines styling for digit buttons.
+- `deleteButtonStyle`: Defines styling for the delete button.
+
+## 5. PickupOrDeliverySelection Component
+
+The `PickupOrDeliverySelection` component allows users to choose between sending a parcel and picking up a parcel. It provides buttons for each option and a button to navigate back to the home page.
+
+### State Management
+
+- `pressedButton`: Keeps track of the currently pressed button for a smoother user experience.
+
+### Functions
+
+1. `handleSelection(choice)`: Calls the `onSelection` callback with the selected choice when a button is clicked.
+2. `handleGoBack()`: Calls the `onGoBack` callback when the "Home Page" button is clicked.
+
+### Styles
+
+- `buttonStyle`: Defines styling for the selection buttons. It includes margin, padding, font size, color, border, border radius, cursor, and transition for a smooth background color change.
+
+## Backend Integration
+
+The application communicates with a backend API to perform actions such as fetching locker numbers, pickup, delivery, and closing the locker door. Ensure that the `config.backendUrl` is correctly configured to point to the backend API.
